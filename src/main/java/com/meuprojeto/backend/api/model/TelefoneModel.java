@@ -10,17 +10,17 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "categoria")
-public class CategoriaModel {
+@Table(name = "Telefone")
+public class TelefoneModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idCategoria")
-    private Long idCategoria;
+    @Column(name = "idTelefone")
+    private Long idTelefone;
+
+    @Column(name = "Tipo_Telefone", nullable = false)
+    private String tipoTelefone;
     
-    @Column(name = "Descricao_Categoria", nullable = false)
-    private String descricaoCategoria;
-    
-    @Column(name = "Tipo_Categoria", nullable = false)
-    private String tipoCategoria;
+    @Column(name = "Numero_Telefone", nullable = false)
+    private String numeroTelefone;
 
 }

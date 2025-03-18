@@ -21,33 +21,20 @@ public class ParcelasModel {
     @Column(name = "idParcelas")
     private Long idParcelas;
 
-    @Column(nullable = false)
-    private LocalDate DataVencimento_Parcela;
+    @Column(name = "DataVencimento_Parcela", nullable = false)
+    private LocalDate dataVencimentoParcela;
 
-    @Column(nullable = false)
-    private int Numero_Parcela;
+    @Column(name = "Numero_Parcela", nullable = false)
+    private int numeroParcela;
 
-    @Column(nullable = false)
-    private double Valor_Parcela;
+    @Column(name = "Valor_Parcela", nullable = false)
+    private double valorParcela;
 
-    @Column(nullable = false)
-    private String Status_Parcela;
+    @Column(name = "Status_Parcela", nullable = false)
+    private String statusParcela;
 
     @ManyToOne
     @JoinColumn(name = "Contas_idContas", nullable = false)
-    private ContasModel Conta;
-
-    public ParcelasModel(Long idParcelas, LocalDate dataVencimento_Parcela, int numero_Parcela, double valor_Parcela,
-            String status_Parcela, ContasModel conta) {
-        this.idParcelas = idParcelas;
-        DataVencimento_Parcela = dataVencimento_Parcela;
-        Numero_Parcela = numero_Parcela;
-        Valor_Parcela = valor_Parcela;
-        Status_Parcela = status_Parcela;
-        Conta = conta;
-    }
-
-    public ParcelasModel() {
-    }
+    private ContasModel conta;
 
 }

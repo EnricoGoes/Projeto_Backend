@@ -17,16 +17,16 @@ public class EnderecoModel {
     @Column(name = "idEndereco")
     private Long idEndereco;
    
-    @Column(nullable = false)
-    private String Rua_Endereco;
+    @Column(name = "Rua_Endereco", nullable = false)
+    private String ruaEndereco;
     
-    @Column(nullable = false)
-    private String Bairro_Endereco;
+    @Column(name = "Bairro_Endereco", nullable = false)
+    private String bairroEndereco;
    
-    @Column(nullable = false)
-    private String Numero_Endereco;
+    @Column(name = "Numero_Endereco", nullable = false)
+    private String numeroEndereco;
    
-    @Column(nullable = false)
-    private String Cep_Endereco;
+    @Column(name = "Cep_Endereco", nullable = false)
+    private String cepEndereco;
 
 }

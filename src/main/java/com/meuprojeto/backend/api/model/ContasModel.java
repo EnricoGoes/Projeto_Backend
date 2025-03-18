@@ -21,44 +21,27 @@ public class ContasModel {
     @Column(name = "idContas")
     private Long idContas;
 
-    @Column(nullable = false)
-    private String Descricao_Conta;
+    @Column(name = "Descricao_Conta", nullable = false)
+    private String descricaoConta;
 
-    @Column(nullable = false)
-    private Float Valor_Conta;
+    @Column(name = "Valor_Conta", nullable = false)
+    private Float valorConta;
 
-    @Column(nullable = false)
-    private LocalDate DataVencimento_Conta;
+    @Column(name = "DataVencimento_Conta", nullable = false)
+    private LocalDate dataVencimentoConta;
 
-    @Column(nullable = false)
-    private LocalDate DataPagamento_Conta;
-
-    @Column(nullable = false)
+    @Column(name = "DataPagamento_Conta", nullable = false)
+    private LocalDate dataPagamentoConta;
 
     @ManyToOne
     @JoinColumn(name = "TipoConta_idCategoria", nullable = false)
-    private CategoriaModel TipoConta;
+    private CategoriaModel tipoConta;
 
-    @Column(nullable = false)
-    private Boolean Status_Conta;
+    @Column(name = "Status_Conta", nullable = false)
+    private Boolean statusConta;
 
     @ManyToOne
-    @JoinColumn(name = "Usuario_idUsuario", nullable = false, unique = true)
-    private UsuarioModel Usuario;
-
-    public ContasModel(Long idContas, String descricao_Conta, Float valor_Conta, LocalDate dataVencimento_Conta,
-            LocalDate dataPagamento_Conta, CategoriaModel tipoConta, Boolean status_Conta, UsuarioModel usuario) {
-        this.idContas = idContas;
-        Descricao_Conta = descricao_Conta;
-        Valor_Conta = valor_Conta;
-        DataVencimento_Conta = dataVencimento_Conta;
-        DataPagamento_Conta = dataPagamento_Conta;
-        TipoConta = tipoConta;
-        Status_Conta = status_Conta;
-        Usuario = usuario;
-    }
-
-    public ContasModel() {
-    }
+    @JoinColumn(name = "Usuario_idUsuario", nullable = false)
+    private UsuarioModel usuario;
 
 }
