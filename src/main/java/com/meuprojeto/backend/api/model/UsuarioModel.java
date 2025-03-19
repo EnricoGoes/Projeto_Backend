@@ -1,5 +1,6 @@
 package com.meuprojeto.backend.api.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,12 +27,12 @@ public class UsuarioModel {
     @Column(name = "CPF_Usuario",nullable = false, unique = true)
     private String cpfUsuario;
     
-    @OneToOne
-    @JoinColumn(name = "Telefone_idTelefone", unique = true)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "Telefone_idTelefone", referencedColumnName = "idTelefone", unique = true)
     private TelefoneModel telefone;
     
-    @ManyToOne
-    @JoinColumn(name = "Endereco_idEndereco", nullable = false)
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "Endereco_idEndereco", referencedColumnName = "idEndereco")
     private EnderecoModel endereco;
     
     @Column(name = "Email_Usuario", nullable = false, unique = true)

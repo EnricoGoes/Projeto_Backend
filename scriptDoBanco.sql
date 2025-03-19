@@ -20,9 +20,9 @@ CREATE TABLE IF NOT EXISTS Usuario(
     Telefone_idTelefone INT UNIQUE,
     FOREIGN KEY (Telefone_idTelefone)
     REFERENCES Telefone(idTelefone) ON UPDATE CASCADE ON DELETE SET NULL,
-    Endereco_idEndereco INT NOT NULL,
+    Endereco_idEndereco INT,
     FOREIGN KEY (Endereco_idEndereco)
-    REFERENCES Endereco(idEndereco) ON UPDATE CASCADE ON DELETE RESTRICT,
+    REFERENCES Endereco(idEndereco) ON UPDATE CASCADE ON DELETE SET NULL,
     Email_Usuario VARCHAR(40) NOT NULL UNIQUE,
     Login_Usuario VARCHAR(20) NOT NULL UNIQUE,
     Senha_Usuario VARCHAR(20) NOT NULL

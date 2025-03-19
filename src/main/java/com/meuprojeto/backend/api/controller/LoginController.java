@@ -24,10 +24,11 @@ public class LoginController {
         this.usuarioRepository = usuarioRepository;
     }
 
+    //Método para realizar login com verificação de credenciais
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginDTO login) {
-        Optional<UsuarioModel> usuario = usuarioRepository.findByLoginUsuario(
-            login.getLogin()
+        Optional<UsuarioModel> usuario = usuarioRepository.findByLoginUsuarioAndSenhaUsuario(
+            login.getLogin(), login.getSenha()
         );
 
         if (usuario.isPresent()) {
@@ -36,4 +37,5 @@ public class LoginController {
             return ResponseEntity.status(401).body("Credenciais inválidas");
         }
     }
+
 }

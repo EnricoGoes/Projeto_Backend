@@ -16,7 +16,7 @@ public class UsuarioDTO implements Serializable {
     private Long id;
     private String nome;
     private String cpf;
-    private String telefone;
+    private TelefoneDTO telefone;
     private EnderecoDTO endereco;
     private String email;
     private String login;
@@ -27,7 +27,7 @@ public class UsuarioDTO implements Serializable {
             usuarioModel.getIdUsuario(),
             usuarioModel.getNomeUsuario(),
             usuarioModel.getCpfUsuario(),
-            usuarioModel.getTelefone() != null ? usuarioModel.getTelefone().getNumeroTelefone() : null,
+            usuarioModel.getTelefone() != null ? TelefoneDTO.converter(usuarioModel.getTelefone()) : null,
             usuarioModel.getEndereco() != null ? EnderecoDTO.converter(usuarioModel.getEndereco()) : null,
             usuarioModel.getEmailUsuario(),
             usuarioModel.getLoginUsuario(),
