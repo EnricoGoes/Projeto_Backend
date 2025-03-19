@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.meuprojeto.backend.api.model.UsuarioModel;
+import com.meuprojeto.backend.api.repository.EnderecoRepository;
+import com.meuprojeto.backend.api.repository.TelefoneRepository;
 import com.meuprojeto.backend.api.repository.UsuarioRepository;
 import com.meuprojeto.backend.api.service.UsuarioService;
 
@@ -25,6 +27,12 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private EnderecoRepository enderecoRepository;
+
+    @Autowired
+    private TelefoneRepository telefoneRepository;
 
     @Autowired
     private UsuarioService usuarioService;
@@ -59,6 +67,31 @@ public class UsuarioController {
     }
 
     // Método para atualizar um usuário
-    //@PutMapping("/atualizar/{id}")
+    @PutMapping("/{id}")
+    public ResponseEntity<UsuarioModel> atualizarUsuario(
+            @PathVariable Long id,
+            @RequestBody UsuarioModel usuarioAtualizado) {
+        return usuarioRepository.findById(id)
+                .map(usuarioExistente -> {
+                    usuarioExistente.setNomeUsuario(usuarioAtualizado.getNomeUsuario());
+                    usuarioExistente.setCpfUsuario(usuarioAtualizado.getCpfUsuario());
+                    usuarioExistente.setEmailUsuario(usuarioAtualizado.getEmailUsuario());
+                    usuarioExistente.setLoginUsuario(usuarioAtualizado.getLoginUsuario());
+                    usuarioExistente.setSenhaUsuario(usuarioAtualizado.getSenhaUsuario());
+                    
+                    if (usuarioAtualizado.getTelefone() != null) {
+                        usuarioExistente.setTelefone(usuarioAtualizado.getTelefone());
+                    }
+            
+                    // Se o JSON não enviar endereço, mantém o endereço existente
+                    if (usuarioAtualizado.getEndereco() != null) {
+                        usuarioExistente.setEndereco(usuarioAtualizado.getEndereco());
+                    }
+
+                    UsuarioModel usuarioSalvo = usuarioRepository.save(usuarioExistente);
+                    return ResponseEntity.ok(usuarioSalvo);
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
 
 }
