@@ -1,35 +1,39 @@
 package com.meuprojeto.backend.api.dto;
 
-import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.meuprojeto.backend.api.model.ParcelasModel;
-
+import com.meuprojeto.backend.api.model.ContasModel;
+import com.meuprojeto.backend.api.repository.ContasRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 public class ParcelasDTO implements Serializable {
-    private Long id;
-    private LocalDate dataVencimento;
-    private int numero;
-    private double valor;
-    private String status;
-    private String Conta;
+    private Long idParcelas;
+    private LocalDate dataVencimentoParcela;
+    private int numeroParcela;
+    private double valorParcela;
+    private Boolean statusParcela;
+    private Long contaId;
+    private String descricaoConta;
 
-    public static ParcelasDTO converter(ParcelasModel parcelasModel){
+    public static ParcelasDTO converter(ParcelasModel parcela) {
         return new ParcelasDTO(
-            parcelasModel.getIdParcelas(),
-            parcelasModel.getDataVencimentoParcela(),
-            parcelasModel.getNumeroParcela(),
-            parcelasModel.getValorParcela(),
-            parcelasModel.getStatusParcela(),
-            parcelasModel.getConta() != null ? parcelasModel.getConta().getDescricaoConta() : null
+            parcela.getIdParcelas(),
+            parcela.getDataVencimentoParcela(),
+            parcela.getNumeroParcela(),
+            parcela.getValorParcela(),
+            parcela.getStatusParcela(),
+            parcela.getConta() != null ? parcela.getConta().getIdContas() : null,
+            parcela.getConta() != null ? parcela.getConta().getDescricaoConta() : null
         );
     }
 
@@ -37,4 +41,18 @@ public class ParcelasDTO implements Serializable {
         return parcelas.stream().map(ParcelasDTO::converter).collect(Collectors.toList());
     }
 
+    public ParcelasModel toModel(ContasRepository contasRepository) {
+        ParcelasModel parcela = new ParcelasModel();
+        parcela.setDataVencimentoParcela(this.dataVencimentoParcela);
+        parcela.setNumeroParcela(this.numeroParcela);
+        parcela.setValorParcela(this.valorParcela);
+        parcela.setStatusParcela(this.statusParcela);
+
+        if (this.contaId != null) {
+            Optional<ContasModel> conta = contasRepository.findById(this.contaId);
+            conta.ifPresent(parcela::setConta);
+        }
+
+        return parcela;
+    }
 }

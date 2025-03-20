@@ -30,7 +30,7 @@ public class ContasModel {
     @Column(name = "DataVencimento_Conta", nullable = false)
     private LocalDate dataVencimentoConta;
 
-    @Column(name = "DataPagamento_Conta", nullable = false)
+    @Column(name = "DataPagamento_Conta")
     private LocalDate dataPagamentoConta;
 
     @ManyToOne

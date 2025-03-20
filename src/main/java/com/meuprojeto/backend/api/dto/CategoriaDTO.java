@@ -18,4 +18,11 @@ public class CategoriaDTO {
         return dto;
     }
 
+    public CategoriaModel toModel() {
+        CategoriaModel categoriaModel = new CategoriaModel();
+        categoriaModel.setDescricaoCategoria(this.descricao);
+        categoriaModel.setTipoCategoria(this.tipo);
+        return categoriaModel;
+    }
+
 }

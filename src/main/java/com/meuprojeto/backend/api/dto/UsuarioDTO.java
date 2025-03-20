@@ -35,4 +35,20 @@ public class UsuarioDTO implements Serializable {
         );
     }
 
+    public UsuarioModel toModel() {
+        UsuarioModel usuario = new UsuarioModel();
+        usuario.setNomeUsuario(this.nome);
+        usuario.setCpfUsuario(this.cpf);
+        usuario.setEmailUsuario(this.email);
+        usuario.setLoginUsuario(this.login);
+        usuario.setSenhaUsuario(this.senha);
+        if (this.telefone != null) {
+            usuario.setTelefone(this.telefone.toModel());
+        }
+        if (this.endereco != null) {
+            usuario.setEndereco(this.endereco.toModel());
+        }
+        return usuario;
+    }
+
 }

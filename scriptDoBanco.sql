@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS Endereco(
     Rua_Endereco VARCHAR(45) NOT NULL,
     Bairro_Endereco VARCHAR(45) NOT NULL,
     Numero_Endereco VARCHAR(5) NOT NULL,
-    Cep_Endereco VARCHAR(8) NOT NULL
+    Cep_Endereco VARCHAR(9) NOT NULL
 );
 CREATE TABLE IF NOT EXISTS Telefone(
 	idTelefone INT AUTO_INCREMENT PRIMARY KEY,
@@ -16,11 +16,11 @@ CREATE TABLE IF NOT EXISTS Telefone(
 CREATE TABLE IF NOT EXISTS Usuario(
 	idUsuario INT AUTO_INCREMENT PRIMARY KEY,
 	Nome_Usuario VARCHAR(45) NOT NULL,
-    CPF_Usuario VARCHAR(11) NOT NULL UNIQUE,
+    CPF_Usuario VARCHAR(14) NOT NULL UNIQUE,
     Telefone_idTelefone INT UNIQUE,
     FOREIGN KEY (Telefone_idTelefone)
     REFERENCES Telefone(idTelefone) ON UPDATE CASCADE ON DELETE SET NULL,
-    Endereco_idEndereco INT,
+    Endereco_idEndereco INT UNIQUE,
     FOREIGN KEY (Endereco_idEndereco)
     REFERENCES Endereco(idEndereco) ON UPDATE CASCADE ON DELETE SET NULL,
     Email_Usuario VARCHAR(40) NOT NULL UNIQUE,
@@ -58,13 +58,13 @@ CREATE TABLE IF NOT EXISTS Parcelas(
 );
 
 INSERT INTO Endereco (Rua_Endereco, Bairro_Endereco, Numero_Endereco, Cep_Endereco)
-VALUES ('Rua das Flores', 'Centro', '123', '12345678');
+VALUES ('Rua das Flores', 'Centro', '123', '12345-678');
 
 INSERT INTO Telefone (Tipo_Telefone, Numero_Telefone)
-VALUES ('Celular', '11999998888');
+VALUES ('Celular', '(11)99999-8888');
 
 INSERT INTO Usuario (Nome_Usuario, CPF_Usuario, Telefone_idTelefone, Endereco_idEndereco, Email_Usuario, Login_Usuario, Senha_Usuario)
-VALUES ('João Silva', '12345678901', 1, 1, 'joao@email.com', 'joaosilva', 'senha123');
+VALUES ('João Silva', '123.456.789-01', 1, 1, 'joao@email.com', 'joaosilva', 'senha123');
 
 INSERT INTO Categoria (Descricao_Categoria, Tipo_Categoria)
 VALUES ('Aluguel', 'Despesa'), ('Salário', 'Receita');

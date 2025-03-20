@@ -18,4 +18,11 @@ public class TelefoneDTO {
         return dto;
     }
 
+    public TelefoneModel toModel() {
+        TelefoneModel telefoneModel = new TelefoneModel();
+        telefoneModel.setTipoTelefone(this.tipo);
+        telefoneModel.setNumeroTelefone(this.numero);
+        return telefoneModel;
+    }
+
 }

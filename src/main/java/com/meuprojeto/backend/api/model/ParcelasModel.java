@@ -31,10 +31,10 @@ public class ParcelasModel {
     private double valorParcela;
 
     @Column(name = "Status_Parcela", nullable = false)
-    private String statusParcela;
+    private Boolean statusParcela;
 
     @ManyToOne
-    @JoinColumn(name = "Contas_idContas", nullable = false)
+    @JoinColumn(name = "Conta_idContas", nullable = false)
     private ContasModel conta;
 
 }

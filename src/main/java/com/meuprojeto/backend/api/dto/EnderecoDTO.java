@@ -22,4 +22,13 @@ public class EnderecoDTO {
         return dto;
     }
 
+    public EnderecoModel toModel() {
+        EnderecoModel enderecoModel = new EnderecoModel();
+        enderecoModel.setRuaEndereco(this.rua);
+        enderecoModel.setBairroEndereco(this.bairro);
+        enderecoModel.setNumeroEndereco(this.numero);
+        enderecoModel.setCepEndereco(this.cep);
+        return enderecoModel;
+    }
+
 }
