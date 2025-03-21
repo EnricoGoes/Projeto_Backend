@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,8 +20,6 @@ import com.meuprojeto.backend.api.model.EnderecoModel;
 import com.meuprojeto.backend.api.model.TelefoneModel;
 import com.meuprojeto.backend.api.model.UsuarioModel;
 import com.meuprojeto.backend.api.repository.UsuarioRepository;
-
-import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:8080")
@@ -32,43 +31,26 @@ public class UsuarioController {
 
     // Método para adicionar um novo usuário
     @PostMapping
-    public ResponseEntity<UsuarioModel> addUsuario(@RequestBody UsuarioDTO usuarioDTO) {
+    public ResponseEntity<UsuarioDTO> addUsuario(@RequestBody UsuarioDTO usuarioDTO) {
         UsuarioModel usuario = usuarioDTO.toModel();
         UsuarioModel savedUsuario = usuarioRepository.save(usuario);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedUsuario);
+        return ResponseEntity.status(HttpStatus.CREATED).body(UsuarioDTO.converter(savedUsuario));
     }
 
     // Método para buscar usuário por id
     @GetMapping("/{id}")
-    public ResponseEntity<UsuarioModel> getUsuarioById(@PathVariable Long id) {
-        Optional<UsuarioModel> usuario = usuarioRepository.findById(id);
-        if (usuario.isPresent()) {
-            return ResponseEntity.ok(usuario.get());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    // Método para buscar por nome
-    @GetMapping("/nome/{nome}")
-    public ResponseEntity<UsuarioModel> getUsuarioByNome(@PathVariable String nome) {
-        Optional<UsuarioModel> usuario = usuarioRepository.findByNomeUsuario(nome);
-        if (usuario.isPresent()) {
-            return ResponseEntity.ok(usuario.get());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<UsuarioDTO> getUsuarioById(@PathVariable Long id) {
+        return usuarioRepository.findById(id)
+                .map(usuario -> ResponseEntity.ok(UsuarioDTO.converter(usuario)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     // Método para buscar por cpf
     @GetMapping("/cpf/{cpf}")
-    public ResponseEntity<UsuarioModel> getUsuarioByCpf(@PathVariable String cpf) {
-        Optional<UsuarioModel> usuario = usuarioRepository.findByCpfUsuario(cpf);
-        if (usuario.isPresent()) {
-            return ResponseEntity.ok(usuario.get());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<UsuarioDTO> getUsuarioByCpf(@PathVariable String cpf) {
+        return usuarioRepository.findByCpfUsuario(cpf)
+                .map(usuario -> ResponseEntity.ok(UsuarioDTO.converter(usuario)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     // Método para atualizar um usuário

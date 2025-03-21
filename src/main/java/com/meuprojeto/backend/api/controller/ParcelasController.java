@@ -33,10 +33,10 @@ public class ParcelasController {
 
     // Método para criar parcelas
     @PostMapping
-    public ResponseEntity<ParcelasModel> addParcelas(@RequestBody ParcelasDTO parcelasDTO) {
+    public ResponseEntity<ParcelasDTO> addParcelas(@RequestBody ParcelasDTO parcelasDTO) {
         ParcelasModel parcelas = parcelasDTO.toModel(contasRepository);
         ParcelasModel savedParcelas = parcelasRepository.save(parcelas);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedParcelas);
+        return ResponseEntity.status(HttpStatus.CREATED).body(ParcelasDTO.converter(savedParcelas));
     }
 
     // Método para listar todas as parcelas

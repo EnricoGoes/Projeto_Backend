@@ -1,18 +1,27 @@
 package com.meuprojeto.backend.api.controller;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.meuprojeto.backend.api.dto.ContasDTO;
 import com.meuprojeto.backend.api.model.CategoriaModel;
 import com.meuprojeto.backend.api.model.ContasModel;
 import com.meuprojeto.backend.api.repository.CategoriaRepository;
 import com.meuprojeto.backend.api.repository.ContasRepository;
 import com.meuprojeto.backend.api.repository.UsuarioRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:8080")
@@ -30,10 +39,10 @@ public class ContasController {
 
     // Método para criar uma nova conta
     @PostMapping
-    public ResponseEntity<ContasModel> addConta(@RequestBody ContasDTO contasDTO) {
+    public ResponseEntity<ContasDTO> addConta(@RequestBody ContasDTO contasDTO) {
         ContasModel contas = contasDTO.toModel(categoriaRepository, usuarioRepository);
         ContasModel savedContas = contasRepository.save(contas);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedContas);
+        return ResponseEntity.status(HttpStatus.CREATED).body(ContasDTO.converter(savedContas));
     }
 
     // Método para buscar todas as contas
@@ -60,18 +69,6 @@ public class ContasController {
     @GetMapping("/status/{status}")
     public ResponseEntity<List<ContasDTO>> getContaByStatus(@PathVariable Boolean status) {
         List<ContasModel> contas = contasRepository.findByStatusConta(status);
-        if (!contas.isEmpty()) {
-            List<ContasDTO> contasDTO = ContasDTO.converter(contas);
-            return ResponseEntity.ok(contasDTO);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    // Método para buscar pelo nome do usuário
-    @GetMapping("/usuario/{nome}")
-    public ResponseEntity<List<ContasDTO>> getContaByUsuario(@PathVariable String nome) {
-        List<ContasModel> contas = contasRepository.findByUsuario_NomeUsuario(nome);
         if (!contas.isEmpty()) {
             List<ContasDTO> contasDTO = ContasDTO.converter(contas);
             return ResponseEntity.ok(contasDTO);
