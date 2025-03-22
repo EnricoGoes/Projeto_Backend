@@ -1,18 +1,19 @@
 package com.meuprojeto.backend.api.dto;
 
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.meuprojeto.backend.api.model.CategoriaModel;
 import com.meuprojeto.backend.api.model.ContasModel;
 import com.meuprojeto.backend.api.model.UsuarioModel;
 import com.meuprojeto.backend.api.repository.CategoriaRepository;
 import com.meuprojeto.backend.api.repository.UsuarioRepository;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -37,8 +38,8 @@ public class ContasDTO implements Serializable {
             contasModel.getDataVencimentoConta(),
             contasModel.getDataPagamentoConta(),
             contasModel.getStatusConta(),
-            null,
-            null,
+            contasModel.getUsuario() != null ? contasModel.getUsuario().getIdUsuario() : null,
+            contasModel.getTipoConta() != null ? contasModel.getTipoConta().getIdCategoria() : null,
             contasModel.getUsuario() != null ? contasModel.getUsuario().getNomeUsuario() : null,
             contasModel.getTipoConta() != null ? contasModel.getTipoConta().getDescricaoCategoria() : null
         );

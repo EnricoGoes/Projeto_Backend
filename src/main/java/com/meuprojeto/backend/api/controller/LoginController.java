@@ -13,6 +13,9 @@ import com.meuprojeto.backend.api.dto.LoginDTO;
 import com.meuprojeto.backend.api.model.UsuarioModel;
 import com.meuprojeto.backend.api.repository.UsuarioRepository;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:8080")
 @RequestMapping("/auth")
@@ -24,15 +27,20 @@ public class LoginController {
         this.usuarioRepository = usuarioRepository;
     }
 
-    //Método para realizar login com verificação de credenciais
+    // Método para realizar login com verificação de credenciais
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginDTO login) {
+    public ResponseEntity<String> login(@RequestBody LoginDTO login, HttpServletResponse response) {
         Optional<UsuarioModel> usuario = usuarioRepository.findByLoginUsuarioAndSenhaUsuario(
-            login.getLogin(), login.getSenha()
-        );
+                login.getLogin(), login.getSenha());
 
         if (usuario.isPresent()) {
-            return ResponseEntity.ok("Login realizado com sucesso!");
+            Cookie cookie = new Cookie("userId", String.valueOf(usuario.get().getIdUsuario()));
+            cookie.setHttpOnly(true);
+            cookie.setPath("/");
+            response.addCookie(cookie);
+
+            return ResponseEntity.ok(String.valueOf(usuario.get().getIdUsuario())); // Retorna o ID do usuário na
+                                                                                    // resposta
         } else {
             return ResponseEntity.status(401).body("Credenciais inválidas");
         }
