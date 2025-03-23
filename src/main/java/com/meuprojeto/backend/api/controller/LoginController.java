@@ -39,8 +39,8 @@ public class LoginController {
             cookie.setPath("/");
             response.addCookie(cookie);
 
-            return ResponseEntity.ok(String.valueOf(usuario.get().getIdUsuario())); // Retorna o ID do usuário na
-                                                                                    // resposta
+            return ResponseEntity.ok(String.valueOf(usuario.get().getIdUsuario()));
+                                                                                   
         } else {
             return ResponseEntity.status(401).body("Credenciais inválidas");
         }
