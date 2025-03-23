@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS Contas(
     DataPagamento_Conta DATE,
     TipoConta_idCategoria INT NOT NULL,
     FOREIGN KEY (TipoConta_idCategoria)
-    REFERENCES Categoria(idCategoria) ON UPDATE CASCADE ON DELETE RESTRICT,
+    REFERENCES Categoria(idCategoria) ON UPDATE CASCADE ON DELETE CASCADE,
     Status_Conta TINYINT NOT NULL,
     Usuario_idUsuario INT NOT NULL,
 	FOREIGN KEY (Usuario_idUsuario)

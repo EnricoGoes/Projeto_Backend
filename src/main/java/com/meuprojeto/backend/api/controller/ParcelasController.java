@@ -55,6 +55,18 @@ public class ParcelasController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    // Método para buscar parcela por conta id
+    @GetMapping("/conta/{id}")
+    public ResponseEntity<List<ParcelasDTO>> getParcelaByContaId(@PathVariable Long id) {
+        List<ParcelasModel> parcelas = parcelasRepository.findByContaIdContas(id);
+        if (!parcelas.isEmpty()) {
+            List<ParcelasDTO> parcelasDTO = ParcelasDTO.converter(parcelas);
+            return ResponseEntity.ok(parcelasDTO);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     // Método para atualizar parcela
     @PutMapping("/{id}")
     public ResponseEntity<ParcelasDTO> atualizarParcela(@PathVariable Long id, @RequestBody ParcelasDTO parcelaDTO) {
@@ -88,6 +100,18 @@ public class ParcelasController {
                     return ResponseEntity.ok().build();
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    // Método para deletar parcela pelo Id da conta
+    @DeleteMapping("/conta/{id}")
+    public ResponseEntity<?> deleteParcelaByContaId(@PathVariable Long id) {
+        List<ParcelasModel> parcelas = parcelasRepository.findByContaIdContas(id);
+        if (!parcelas.isEmpty()) {
+            parcelasRepository.deleteAll(parcelas);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }
